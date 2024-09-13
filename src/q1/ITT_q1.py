@@ -16,11 +16,15 @@ def fetch_data_ITT():
     # variable information 
     print(infrared_thermography_temperature.variables) 
 
-    X_itt['Gender'] = LabelEncoder().fit_transform(X_itt['Gender'])
+    X_itt['Gender'] = LabelEncoder().fit_transform(X_itt['Gender'])           
     X_itt['Age'] = LabelEncoder().fit_transform(X_itt['Age'])
     X_itt['Ethnicity'] = LabelEncoder().fit_transform(X_itt['Ethnicity'])
 
     X_itt.to_csv('./q1/csv/X_itt.csv', index=False)
 
-    print("this is the features ----------------------------- ", X_itt)
-    print("this is the target ----------------------------- ", Y_itt)
+    print("this is the target ----------------------------- ")
+    print(Y_itt)
+
+    print("this is the distribution of the target ----------------------------- ")
+    print(Y_itt.value_counts())
+    print(Y_itt.describe())
