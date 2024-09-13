@@ -7,15 +7,15 @@ def fetch_data():
     # fetch dataset 
     infrared_thermography_temperature = fetch_ucirepo(id=925) 
     # data (as pandas dataframes) 
-    X = infrared_thermography_temperature.data.features 
-    y = infrared_thermography_temperature.data.targets 
+    X_itt = infrared_thermography_temperature.data.features 
+    Y_itt = infrared_thermography_temperature.data.targets 
 
     ### CDC Diabetes Health Indicators ###
     # fetch dataset 
     cdc_diabetes_health_indicators = fetch_ucirepo(id=891) 
     # data (as pandas dataframes) 
-    X = cdc_diabetes_health_indicators.data.features 
-    y = cdc_diabetes_health_indicators.data.targets 
+    X_CDC = cdc_diabetes_health_indicators.data.features 
+    Y_CDC = cdc_diabetes_health_indicators.data.targets 
 
     # metadata 
     print(infrared_thermography_temperature.metadata) 
