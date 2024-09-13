@@ -1,7 +1,9 @@
 import numpy as np
+import pandas as pd
 from ucimlrepo import fetch_ucirepo 
+from sklearn.preprocessing import LabelEncoder
   
-def fetch_data():
+def fetch_data_ITT():
 
     ### Infrared Thermography Temperature ###
     # fetch dataset 
@@ -9,18 +11,16 @@ def fetch_data():
     # data (as pandas dataframes) 
     X_itt = infrared_thermography_temperature.data.features 
     Y_itt = infrared_thermography_temperature.data.targets 
-
-    ### CDC Diabetes Health Indicators ###
-    # fetch dataset 
-    cdc_diabetes_health_indicators = fetch_ucirepo(id=891) 
-    # data (as pandas dataframes) 
-    X_CDC = cdc_diabetes_health_indicators.data.features 
-    Y_CDC = cdc_diabetes_health_indicators.data.targets 
-
     # metadata 
     print(infrared_thermography_temperature.metadata) 
-    print(cdc_diabetes_health_indicators.metadata) 
-
     # variable information 
     print(infrared_thermography_temperature.variables) 
-    print(cdc_diabetes_health_indicators.variables) 
+
+    X_itt['Gender'] = LabelEncoder().fit_transform(X_itt['Gender'])
+    X_itt['Age'] = LabelEncoder().fit_transform(X_itt['Age'])
+    X_itt['Ethnicity'] = LabelEncoder().fit_transform(X_itt['Ethnicity'])
+
+    X_itt.to_csv('./q1/csv/X_itt.csv', index=False)
+
+    print("this is the features ----------------------------- ", X_itt)
+    print("this is the target ----------------------------- ", Y_itt)
