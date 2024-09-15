@@ -15,3 +15,5 @@ def fetch_data_CDC():
     print(cdc_diabetes_health_indicators.metadata) 
     # variable information 
     print(cdc_diabetes_health_indicators.variables) 
+
+    return X_CDC, Y_CDC
