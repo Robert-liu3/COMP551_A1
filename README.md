@@ -3,3 +3,5 @@ To run code "python main.py"
 
 Encode categorical data:
 https://www.kaggle.com/discussions/getting-started/27270
+
+-------------------------------------------------------------------------------------------------------------
