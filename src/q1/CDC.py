@@ -16,4 +16,7 @@ def fetch_data_CDC():
     # variable information 
     print(cdc_diabetes_health_indicators.variables) 
 
+    X_CDC.to_csv('./q1/csv/X_cdc.csv', index=False)
+    Y_CDC.to_csv('./q1/csv/Y_cdc.csv', index=False)
+
     return X_CDC, Y_CDC
