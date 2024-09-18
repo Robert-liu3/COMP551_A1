@@ -1,6 +1,6 @@
 from q1.ITT import fetch_data_ITT, check_data
 from q1.CDC import fetch_data_CDC
-
+from q2.LinearRegression import LinearRegression
 
 def main():
     print("Hello World!")
