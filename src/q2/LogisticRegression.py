@@ -23,18 +23,11 @@ class LogisticRegression:
 
     def gradient(self, x, y):
         N,D = x.shape
-<<<<<<< Updated upstream
-        yh = logistic(np.dot(x, self.w))    # predictions  size N
-        grad = np.dot(x.T, yh - y)/N        # divide by N because cost is mean over N points
-        return grad       
-        
-=======
         yh = self.logistic(np.dot(x, self.w))    # predictions  size N
         y = y.values.ravel()
         grad = np.dot(x.T, yh - y)/N        # divide by N because cost is mean over N points
         return grad       
     
->>>>>>> Stashed changes
     def fit(self, x, y):
         if x.ndim == 1:
             x = x[:, None]
