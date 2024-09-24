@@ -1,7 +1,5 @@
 import numpy as np
 
-
-
 class LogisticRegression:  
     def __init__(self, add_bias=True, learning_rate=.1, epsilon=1e-4, max_iters=1e5, verbose=False):
         self.add_bias = add_bias
