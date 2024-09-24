@@ -10,9 +10,6 @@ class LogisticRegression:
         self.max_iters = max_iters                    #maximum number of iteration of gradient descent
         self.verbose = verbose
     
-
-
-
     def logistic(self, z):
         return 1. / (1 + np.exp(-z)) 
 
