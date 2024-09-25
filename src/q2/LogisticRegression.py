@@ -1,33 +1,21 @@
 import numpy as np
-# import matplotlib.pyplot as plt
 
-
-class LogisticRegression:
+class LogisticRegression:  
     def __init__(self, add_bias=False, learning_rate=.1, epsilon=1e-4, max_iters=1e5, verbose=False):
         self.add_bias = add_bias
         self.learning_rate = learning_rate
         self.epsilon = epsilon                        #to get the tolerance for the norm of gradients 
         self.max_iters = max_iters                    #maximum number of iteration of gradient descent
         self.verbose = verbose
-        self.w = None
-        pass
-
+    
     def logistic(self, z):
-        return 1 / (1 + np.exp(-z))
-
-    def cost_fn(x, y, w):
-        N, D = x.shape                                                       
-        z = np.dot(x, w)
-        J = np.mean(y * np.log1p(np.exp(-z)) + (1-y) * np.log1p(np.exp(z)))  #log1p calculates log(1+x) to remove floating point inaccuracies 
-        return J
+        return 1. / (1 + np.exp(-z)) 
 
     def gradient(self, x, y):
         N,D = x.shape
         yh = self.logistic(np.dot(x, self.w))    # predictions  size N
-        y = y.values.ravel()
         grad = np.dot(x.T, yh - y)/N        # divide by N because cost is mean over N points
-        return grad       
-    
+        return grad  
     def fit(self, x, y):
         if x.ndim == 1:
             x = x[:, None]
@@ -48,7 +36,7 @@ class LogisticRegression:
             print(f'terminated after {t} iterations, with norm of the gradient equal to {np.linalg.norm(g)}')
             print(f'the weight found: {self.w}')
         return self
-        
+    
     def predict(self, x):
         if x.ndim == 1:
             x = x[:, None]
