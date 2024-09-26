@@ -14,6 +14,7 @@ class LogisticRegression:
     def gradient(self, x, y):
         N,D = x.shape
         yh = self.logistic(np.dot(x, self.w))    # predictions  size N
+        y = y.values.ravel()
         grad = np.dot(x.T, yh - y)/N        # divide by N because cost is mean over N points
         return grad  
     def fit(self, x, y):
@@ -44,5 +45,6 @@ class LogisticRegression:
         if self.add_bias:
             x = np.column_stack([x,np.ones(Nt)])
         yh = self.logistic(np.dot(x,self.w))            #predict output
+        print("this is the shape of yh: ", yh.shape)
         return yh
 
