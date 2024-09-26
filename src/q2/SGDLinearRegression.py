@@ -26,6 +26,8 @@ class SGDLinearRegression:
 
     def gradient(self, x, y):
         N,D = x.shape
+        print("Gradient fn x shape" + x.shape)
+        print("gradient fn w shape" + self.w.shape)
         yh =  x @ self.w 
         grad = .5*np.dot(yh - y, x)/N
         return grad 
@@ -57,6 +59,7 @@ class SGDLinearRegression:
             x = np.column_stack([x,np.ones(N)])
 
         N,D = x.shape
+        print(k)
         self.w = np.zeros(D)
         g = np.inf 
         t = 0
