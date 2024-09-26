@@ -2,6 +2,7 @@ from q2.LinearRegression import LinearRegression
 from q2.LogisticRegression import LogisticRegression
 from q1.ITT import fetch_data_ITT
 from q1.CDC import fetch_data_CDC
+import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 import matplotlib.pyplot as plt
@@ -13,6 +14,11 @@ def performanceLinearRegression(size=0.2):
     model = LinearRegression(add_bias = False)
     model.fit(X_train,Y_train)
     yh = model.predict(X_test)
+    Y_test = Y_test.values.ravel()
+    yh = yh.values.ravel()
+    m, b = np.polyfit(Y_test, yh, 1)
+
+    plt.plot(Y_test, m*Y_test + b, color='red')
 
     plt.scatter(Y_test, yh)
     plt.xlabel('True values')
