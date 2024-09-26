@@ -14,9 +14,7 @@ if __name__ == "__main__":
     # for i in range(2, 9):
     #     performance(x, y, size=i*0.1)
     
-    N = 50
-    x = np.linspace(-5,5, N)
-    y = ( x < 2).astype(int)                                  #generate synthetic data
+    x,y = fetch_data_CDC()                            #generate synthetic data
     model = LogisticRegression(verbose=True, )
     yh = model.fit(x,y).predict(x)
     plt.plot(x, y, '.', label='dataset')
