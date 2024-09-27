@@ -1,21 +1,26 @@
 import numpy as np
 
-class LogisticRegression:  
-    def __init__(self, add_bias=True, learning_rate=.1, epsilon=1e-4, max_iters=1e5, verbose=False):
+import warnings
+warnings.filterwarnings('ignore')
+
+logistic = lambda z: 1./ (1 + np.exp(-z))       #logistic function
+
+
+def gradient(self, x, y):
+    N,D = x.shape
+    yh = logistic(np.dot(x, self.w))    # predictions  size N
+    grad = np.dot(x.T, yh - y)/N        # divide by N because cost is mean over N points
+    return grad
+
+class LogisticRegression:
+    
+    def __init__(self, add_bias=True, learning_rate=.2, epsilon=1e-2, max_iters=1e4, verbose=False):
         self.add_bias = add_bias
         self.learning_rate = learning_rate
         self.epsilon = epsilon                        #to get the tolerance for the norm of gradients 
         self.max_iters = max_iters                    #maximum number of iteration of gradient descent
         self.verbose = verbose
-    
-    def logistic(self, z):
-        return 1. / (1 + np.exp(-z)) 
-
-    def gradient(self, x, y):
-        N,D = x.shape
-        yh = self.logistic(np.dot(x, self.w))    # predictions  size N
-        grad = np.dot(x.T, yh - y)/N        # divide by N because cost is mean over N points
-        return grad  
+        
     def fit(self, x, y):
         if x.ndim == 1:
             x = x[:, None]
@@ -43,6 +48,7 @@ class LogisticRegression:
         Nt = x.shape[0]
         if self.add_bias:
             x = np.column_stack([x,np.ones(Nt)])
-        yh = self.logistic(np.dot(x,self.w))            #predict output
+        yh = logistic(np.dot(x,self.w))            #predict output
         return yh
 
+LogisticRegression.gradient = gradient             #initialize the gradient method of the LogisticRegression class with gradient function
