@@ -45,6 +45,5 @@ class LogisticRegression:
         if self.add_bias:
             x = np.column_stack([x,np.ones(Nt)])
         yh = self.logistic(np.dot(x,self.w))            #predict output
-        print("this is the shape of yh: ", yh.shape)
         return yh
 
