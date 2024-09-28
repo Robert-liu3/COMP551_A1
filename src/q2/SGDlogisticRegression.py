@@ -1,6 +1,6 @@
 import numpy as np
 
-class LogisticRegression:  
+class SGDLogisticRegression:  
     def __init__(self, add_bias=True, learning_rate=.1, epsilon=1e-4, max_iters=1e5, batch_size=32, verbose=False):
         self.add_bias = add_bias
         self.learning_rate = learning_rate
