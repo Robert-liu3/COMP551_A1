@@ -11,10 +11,6 @@ def fetch_data_ITT():
     # data (as pandas dataframes) 
     X_itt = infrared_thermography_temperature.data.features 
     Y_itt = infrared_thermography_temperature.data.targets 
-    # metadata 
-    print(infrared_thermography_temperature.metadata) 
-    # variable information 
-    print(infrared_thermography_temperature.variables)    
 
     X_itt['Gender'] = LabelEncoder().fit_transform(X_itt['Gender'])           
     X_itt['Age'] = LabelEncoder().fit_transform(X_itt['Age'])
@@ -24,13 +20,7 @@ def fetch_data_ITT():
 
     X_itt.to_csv('./q1/csv/X_itt.csv', index=False)
     Y_itt.to_csv('./q1/csv/Y_itt.csv', index=False)
-
-    # print("this is the target ----------------------------- ")
-    # print(Y_itt)
-
-    # print("this is the distribution of the target ----------------------------- ")
-    # print(Y_itt.value_counts())
-    # print(Y_itt.describe())
+    
     return X_itt, Y_itt
 
 def check_data(x, y):

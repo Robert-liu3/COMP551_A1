@@ -10,19 +10,11 @@ def fetch_data_CDC():
     X_diabetes = cdc_diabetes.data.features
     y_diabetes = cdc_diabetes.data.targets
 
-    # Display initial data with null values
-    print("Original data with null values:")
-    print(X_diabetes[X_diabetes.isnull().any(axis=1)].head())
-
-    # Set emty values to mean of the column
+    # Empty values are filled with the mean of the column
     imputer = SimpleImputer(strategy='mean')
     X_diabetes_imputed = pd.DataFrame(imputer.fit_transform(X_diabetes), columns=X_diabetes.columns)
 
-    # Display data after imputation
-    print("Data after mean imputation:")
-    print(X_diabetes_imputed[X_diabetes.isnull().any(axis=1)].head())
-
-    # Scale feature so that there is no bias
+    # Feature scaling so that there is no bias
     scaler = StandardScaler()
     X_diabetes_scaled = pd.DataFrame(scaler.fit_transform(X_diabetes_imputed), columns=X_diabetes.columns)
 
