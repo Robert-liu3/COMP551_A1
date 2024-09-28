@@ -22,7 +22,7 @@ def fetch_data_CDC():
     X_diabetes_scaled.to_csv('./q1/csv/X_cdc.csv', index=False)
     y_diabetes.to_csv('./q1/csv/Y_cdc.csv', index=False)
 
-    return X_diabetes_scaled, y_diabetes
+    return X_diabetes_scaled.to_numpy(), y_diabetes['Diabetes_binary'].to_numpy()
 
     
 

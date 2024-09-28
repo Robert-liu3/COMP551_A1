@@ -12,7 +12,6 @@ def gradient(self, x, y):
     return grad
 
 class LogisticRegression:
-    
     def __init__(self, add_bias=True, learning_rate=.2, epsilon=1e-2, max_iters=1e4, verbose=False):
         self.add_bias = add_bias
         self.learning_rate = learning_rate
