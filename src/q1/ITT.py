@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from ucimlrepo import fetch_ucirepo 
 from sklearn.preprocessing import LabelEncoder
+from sklearn.discriminant_analysis import StandardScaler
   
 def fetch_data_ITT():
 

@@ -1,5 +1,7 @@
 from q2.LinearRegression import LinearRegression
 from q2.LogisticRegression import LogisticRegression
+from q2.SGDLinearRegression import SGDLinearRegression
+from q2.SGDLogisticRegression import SGDLogisticRegression
 from q1.ITT import fetch_data_ITT
 from q1.CDC import fetch_data_CDC
 import numpy as np
@@ -68,6 +70,48 @@ def performanceLogisticRegression(size = 0.2):
 
     return size, accuracy, precision, recall, f1
 
+def performanceSGDLinReg(batch_size=32, size=0.2):
+    x,y = fetch_data_ITT()
+    print("this is the shape of x: ", x.shape)
+    print("this is the shape of y: ", y.shape)
+    X_train, X_test, Y_train, Y_test = train_test_split(x, y, test_size=size, random_state=42)
+
+    model = SGDLinearRegression(batch_size=batch_size, learning_rate=0.0000001)
+    model.fit(X_train,Y_train)
+    yh = model.predict(X_test)
+
+    Y_test = Y_test.values.ravel()
+    yh = yh.values.ravel()
+
+    m, b = np.polyfit(Y_test, yh, 1)
+
+    plt.plot(Y_test, m*Y_test + b, color='red')
+
+    plt.scatter(Y_test, yh)
+    plt.xlabel('True values')
+    plt.ylabel('Predicted values')
+    plt.title('Performance of the model with test size = {}'.format(size))
+    plt.show()
+
+    mse = mean_squared_error(Y_test, yh)
+
+    return batch_size, mse
+
+def performanceSGDLogReg(batch_size=32, size=0.2):
+    x,y = fetch_data_CDC()
+    X_train, X_test, Y_train, Y_test = train_test_split(x, y, test_size=size, random_state=42)
+
+    model = SGDLogisticRegression(batch_size=batch_size)
+    model.fit(X_train,Y_train)
+    yh = model.predict(X_test)
+    yh_binary = (yh > 0.5).astype(int)
+
+    accuracy = accuracy_score(Y_test, yh_binary)
+    precision = precision_score(Y_test, yh_binary)
+    recall = recall_score(Y_test, yh_binary)
+    f1 = f1_score(Y_test, yh_binary)
+
+    return batch_size, accuracy, precision, recall, f1
 
 def linRegGrowingSubset():
     list = []
@@ -84,6 +128,32 @@ def logRegGrowingSubset():
     list = []
     for i in range(2, 9):
         list.append(performanceLogisticRegression(size=i*0.1))
+    df = pd.DataFrame(list, columns=['Size', 'Accuracy', 'Precision', 'Recall', 'F1'])
+    plt.scatter(df['Size'], df['Accuracy'], color='red', label='Accuracy')
+    plt.scatter(df['Size'], df['Precision'], color='blue', label='Precision')
+    plt.scatter(df['Size'], df['Recall'], color='green', label='Recall')
+    plt.scatter(df['Size'], df['F1'], color='yellow', label='F1')
+    plt.xlabel('Size')
+    plt.ylabel('Metrics')
+    plt.title('Metrics vs Size')
+    plt.legend()
+    plt.show()
+
+def SGDLinRegGrowingMiniBatch():
+    list = []
+    for i in range(3, 8):
+        list.append(performanceSGDLinReg(batch_size=2**i))
+    df = pd.DataFrame(list, columns=['Size', 'Mean Square Error'])
+    plt.scatter(df['Size'], df['Mean Square Error'])
+    plt.xlabel('Size')
+    plt.ylabel('Mean Square Error')
+    plt.title('Mean Square Error vs Size')
+    plt.show()
+
+def SGDLogRegGrowingMiniBatch():
+    list = []
+    for i in range(3, 8):
+        list.append(performanceSGDLogReg(batch_size=2**i))
     df = pd.DataFrame(list, columns=['Size', 'Accuracy', 'Precision', 'Recall', 'F1'])
     plt.scatter(df['Size'], df['Accuracy'], color='red', label='Accuracy')
     plt.scatter(df['Size'], df['Precision'], color='blue', label='Precision')

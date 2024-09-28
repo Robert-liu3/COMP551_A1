@@ -14,22 +14,20 @@ class SGDLinearRegression:
 
         if record_history:
             self.w_history = []                 #to store the weight history for visualization
-            
         self.w = None
         pass
 
-    def cost_fn(x, y, w): # https://www.geeksforgeeks.org/ml-mini-batch-gradient-descent-with-python/
+    def cost_fn(self, x, y, w): # https://www.geeksforgeeks.org/ml-mini-batch-gradient-descent-with-python/
         N,D = x.shape                                                       
         z = np.dot(x, w)
-        J = .5*np.dot((z - y).transpose(), (z - y))
-        return J[0] 
+        J = .5* np.mean((z - y)**2)
+        return J
 
     def gradient(self, x, y):
         N,D = x.shape
-        print("Gradient fn x shape" + x.shape)
-        print("gradient fn w shape" + self.w.shape)
+        print("this is the size of x", x.shape)
         yh =  x @ self.w 
-        grad = .5*np.dot(yh - y, x)/N
+        grad = np.dot(x.T, (yh - y)) / N
         return grad 
 
     def mini_batch(self, x, y, batch_size): # # https://www.geeksforgeeks.org/ml-mini-batch-gradient-descent-with-python/
@@ -41,13 +39,13 @@ class SGDLinearRegression:
     
         for i in range(n_minibatches + 1):
             mini_batch = data[i * batch_size:(i + 1)*batch_size, :]
-            X_mini = mini_batch[:, :-1]
-            Y_mini = mini_batch[:, -1].reshape((-1, 1))
+            X_mini = mini_batch[:, :-y.shape[1]]
+            Y_mini = mini_batch[:, -y.shape[1]:]
             mini_batches.append((X_mini, Y_mini))
         if data.shape[0] % batch_size != 0:
             mini_batch = data[i * batch_size:data.shape[0]]
-            X_mini = mini_batch[:, :-1]
-            Y_mini = mini_batch[:, -1].reshape((-1, 1))
+            X_mini = mini_batch[:, :-y.shape[1]]
+            Y_mini = mini_batch[:, -y.shape[1]:]
             mini_batches.append((X_mini, Y_mini))
         return mini_batches    
     
@@ -59,8 +57,8 @@ class SGDLinearRegression:
             x = np.column_stack([x,np.ones(N)])
 
         N,D = x.shape
-        print(k)
-        self.w = np.zeros(D)
+        M = y.shape[1]
+        self.w = np.zeros((D, M))
         g = np.inf 
         t = 0
         # the code snippet below is for gradient descent
@@ -68,6 +66,7 @@ class SGDLinearRegression:
             mini_batches = self.mini_batch(x, y, self.batch_size)
             for mini_batch in mini_batches:
                 x_mini, y_mini = mini_batch
+                print(x_mini.shape)
                 g = self.gradient(x_mini, y_mini)
                 self.w = self.w - self.learning_rate * g 
             
@@ -75,6 +74,7 @@ class SGDLinearRegression:
         return self
     
     def predict(self, x):
+        N = x.shape[0]   
         if self.add_bias:
             x = np.column_stack([x,np.ones(N)])
         yh = x@self.w
