@@ -10,6 +10,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, mean_squared_error
 import matplotlib.pyplot as plt
 
+
+#PERFORMANCE FUNCTIONS FOR LINEAR REGRESSION AND LOGISTIC REGRESSION
 def performanceLinearRegression(size=0.2):
     x,y = fetch_data_ITT()
     X_train, X_test, Y_train, Y_test = train_test_split(x, y, test_size=size, random_state=42)
@@ -70,16 +72,16 @@ def performanceLogisticRegression(size = 0.2):
 
     return size, accuracy, precision, recall, f1
 
+
+#PERFORMANCE FUNCTIONS FOR SGD LINEAR REGRESSION AND SGD LOGISTIC REGRESSION
 def performanceSGDLinReg(batch_size=32, size=0.2):
     x,y = fetch_data_ITT()
-    print("this is the shape of x: ", x.shape)
-    print("this is the shape of y: ", y.shape)
     X_train, X_test, Y_train, Y_test = train_test_split(x, y, test_size=size, random_state=42)
 
-    model = SGDLinearRegression(batch_size=batch_size, learning_rate=0.0000001)
+    model = SGDLinearRegression(batch_size=batch_size, learning_rate=0.00001) #YOU NEED TO TEST OUT THE DIFFERENT LEARNING RATES TO KNOW WHICH ONE IS GOOD
     model.fit(X_train,Y_train)
     yh = model.predict(X_test)
-
+    yh = yh.fillna(yh.mean())
     Y_test = Y_test.values.ravel()
     yh = yh.values.ravel()
 
@@ -113,6 +115,7 @@ def performanceSGDLogReg(batch_size=32, size=0.2):
 
     return batch_size, accuracy, precision, recall, f1
 
+#GROWING SIZES
 def linRegGrowingSubset():
     list = []
     for i in range(2, 9):
@@ -139,6 +142,7 @@ def logRegGrowingSubset():
     plt.legend()
     plt.show()
 
+#GROWING MINI BATCH SIZES
 def SGDLinRegGrowingMiniBatch():
     list = []
     for i in range(3, 8):

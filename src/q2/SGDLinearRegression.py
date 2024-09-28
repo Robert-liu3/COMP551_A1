@@ -25,7 +25,6 @@ class SGDLinearRegression:
 
     def gradient(self, x, y):
         N,D = x.shape
-        print("this is the size of x", x.shape)
         yh =  x @ self.w 
         grad = np.dot(x.T, (yh - y)) / N
         return grad 
@@ -66,7 +65,6 @@ class SGDLinearRegression:
             mini_batches = self.mini_batch(x, y, self.batch_size)
             for mini_batch in mini_batches:
                 x_mini, y_mini = mini_batch
-                print(x_mini.shape)
                 g = self.gradient(x_mini, y_mini)
                 self.w = self.w - self.learning_rate * g 
             

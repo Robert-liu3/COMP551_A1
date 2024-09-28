@@ -47,5 +47,3 @@ class LogisticRegression:
             x = np.column_stack([x,np.ones(Nt)])
         yh = logistic(np.dot(x,self.w))            #predict output
         return yh
-
-# LogisticRegression.gradient = gradient             #initialize the gradient method of the LogisticRegression class with gradient function

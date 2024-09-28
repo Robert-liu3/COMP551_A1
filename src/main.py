@@ -30,9 +30,10 @@ if __name__ == "__main__":
     # plt.show()
 
     # linRegGrowingSubset()
-    logRegGrowingSubset()
+    # logRegGrowingSubset()
     # SGDLinRegGrowingMiniBatch()
     # SGDLogRegGrowingMiniBatch()
     # performanceSGDLinReg()
+    performanceSGDLogReg()
     # performanceLinearRegression()
     
