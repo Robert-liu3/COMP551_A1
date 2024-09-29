@@ -17,9 +17,7 @@ def performanceLinearRegression(size=0.2):
     X_train, X_test, Y_train, Y_test = train_test_split(x, y, test_size=size, random_state=42)
 
     model = LinearRegression(add_bias = False)
-
-    print("this is the shape of x: ", X_train.shape)
-    print("this is the shape of y: ", Y_train.shape)
+    
     model.fit(X_train.values,Y_train.values)
     yh = model.predict(X_test.values)
     Y_test = Y_test.values.ravel()
