@@ -14,12 +14,19 @@ class LinearRegression:
             N = x.shape[0]
             if self.add_bias:
                 x = np.column_stack([x,np.ones(N)])   
-            self.w = np.linalg.lstsq(x, y)[0]         
+            self.w = np.matmul(
+                np.linalg.inv(np.matmul(x.T,x))
+                ,np.matmul(x.T,y)
+                )
+            print("this is the shape of x after fit: ", x.shape)
+            print("this is the shape of w after fit: ", self.w.shape)         
             return self
         
     def predict(self, x):
         N = x.shape[0]
         if self.add_bias:
             x = np.column_stack([x,np.ones(N)])
-        yh = x@self.w
+        print("this is the shape of x before predict: ", x.shape)
+        print("this is the shape of w before predict: ", self.w.shape)
+        yh = np.matmul(x,self.w)
         return yh

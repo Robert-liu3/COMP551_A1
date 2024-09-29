@@ -1,7 +1,7 @@
 from q2.LinearRegression import LinearRegression
 from q2.LogisticRegression import LogisticRegression
 from q2.SGDLinearRegression import SGDLinearRegression
-from q2.SGDLogisticRegression import SGDLogisticRegression
+from q2.SGDlogisticRegression import SGDLogisticRegression
 from q1.ITT import fetch_data_ITT
 from q1.CDC import fetch_data_CDC
 import numpy as np
@@ -17,10 +17,13 @@ def performanceLinearRegression(size=0.2):
     X_train, X_test, Y_train, Y_test = train_test_split(x, y, test_size=size, random_state=42)
 
     model = LinearRegression(add_bias = False)
-    model.fit(X_train,Y_train)
-    yh = model.predict(X_test)
+
+    print("this is the shape of x: ", X_train.shape)
+    print("this is the shape of y: ", Y_train.shape)
+    model.fit(X_train.values,Y_train.values)
+    yh = model.predict(X_test.values)
     Y_test = Y_test.values.ravel()
-    yh = yh.values.ravel()
+    yh = yh.ravel()
 
     mse = mean_squared_error(Y_test, yh)
 
@@ -34,6 +37,7 @@ def performanceLinearRegression(size=0.2):
 
 
     m, b = np.polyfit(Y_test, yh, 1)
+    print("Dataset with size %.2f has slope %.4f" % (size,m))
 
     plt.plot(Y_test, m*Y_test + b, color='red')
 
